@@ -12,31 +12,33 @@ jobs:
     environment: staging
 
     steps:
-      - name: Deploy to staging serverve
+      - name: Deploy to staging server
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST_STAGING }}
           username: ${{ secrets.SSH_USER_NAME_STAGING }}
           key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
+          port: 22
           script: |
+            set -e
             # Set environment variables
-            export APP_STG_PATH="${{ vars.APP_STG_PATH }}"
-            export GIT_URL="${{ vars.GIT_URL }}"
-            export MINIO_STG_ENDPOINT="${{ secrets.MINIO_STG_ENDPOINT }}"
-            export MINIO_STG_ACCESS_KEY="${{ secrets.MINIO_STG_ACCESS_KEY }}"
-            export APP_STG_PORT="${{ secrets.APP_STG_PORT }}"
-            export MINIO_STG_SECRET_KEY="${{ secrets.MINIO_STG_SECRET_KEY }}"
+            APP_STG_PATH="/home/ubuntu/staging"
+            GIT_URL="${{ secrets.GIT_URL }}"
+            MINIO_STG_ENDPOINT="${{ secrets.MINIO_STG_ENDPOINT }}"
+            MINIO_STG_ACCESS_KEY="${{ secrets.MINIO_STG_ACCESS_KEY }}"
+            MINIO_STG_SECRET_KEY="${{ secrets.MINIO_STG_SECRET_KEY }}"
+            APP_STG_PORT="${{ secrets.APP_STG_PORT }}"
 
             # Check if application path exists
-            if [[ -d "/home/ubuntu/${APP_STG_PATH}" ]]; then 
-              cd /home/ubuntu/${APP_STG_PATH}
+            if [[ -d "${APP_STG_PATH}" ]]; then 
+              cd "${APP_STG_PATH}"
               docker compose down pacmusic-stg
               git pull origin master
             else
-              mkdir -p /home/ubuntu/${APP_STG_PATH}
+              mkdir -p "${APP_STG_PATH}"
               ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-              git clone $GIT_URL /home/ubuntu/${APP_STG_PATH}
-              cd /home/ubuntu/${APP_STG_PATH}
+              git clone "${GIT_URL}" "${APP_STG_PATH}"
+              cd "${APP_STG_PATH}"
             fi
 
             # Update environment variables in .env file
@@ -50,4 +52,4 @@ jobs:
 
       - name: Test endpoint
         run: |
-          curl ${{ secrets.STAGING_APP_URL }}
+          curl -sSf ${{ secrets.STAGING_APP_URL }}
