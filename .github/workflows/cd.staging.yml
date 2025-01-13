@@ -12,12 +12,11 @@ jobs:
     environment: staging
 
     steps:
-      # Step 2: Run deployment script via SSH
       - name: Deploy to staging server
         uses: appleboy/ssh-action@v0.1.10
         env:
           APP_STG_PATH: ${{ vars.APP_STG_PATH }}
-          GIT_URL: ${{ secrets.GIT_URL }}
+          GIT_URL: ${{ vars.GIT_URL }}
           MINIO_STG_ENDPOINT: ${{ secrets.MINIO_STG_ENDPOINT }}
           MINIO_STG_ACCESS_KEY: ${{ secrets.MINIO_STG_ACCESS_KEY }}
           SSH_HOST_STAGING: ${{ secrets.SSH_HOST_STAGING }}
