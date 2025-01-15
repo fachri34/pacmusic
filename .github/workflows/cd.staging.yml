@@ -13,16 +13,15 @@ jobs:
 
     steps:
       - name: Deploy to staging server
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST_STAGING }}
           username: ${{ secrets.SSH_USER_NAME_STAGING }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_STAGING }}
-          port: 22
+          password: ${{ secrets.SSH_PASS }}
           script: |
             set -e
             # Set environment variables
-            APP_STG_PATH="/home/ubuntu/staging"
+            APP_STG_PATH=${{ secrets.APP_STG_PATH }}
             GIT_URL="${{ secrets.GIT_URL }}"
             MINIO_STG_ENDPOINT="${{ secrets.MINIO_STG_ENDPOINT }}"
             MINIO_STG_ACCESS_KEY="${{ secrets.MINIO_STG_ACCESS_KEY }}"
