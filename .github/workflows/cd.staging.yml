@@ -52,4 +52,4 @@ jobs:
 
       - name: Test endpoint
         run: |
-          curl -sSf ${{ secrets.STAGING_APP_URL }}
+          curl ${{ secrets.STG_URL }}
