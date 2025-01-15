@@ -14,19 +14,20 @@ jobs:
     steps:
       - name: Deploy to staging server
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          APP_STG_PORT: ${{ secrets.APP_STG_PORT}}
+          APP_STG_PATH: ${{ vars.APP_STG_PATH }}
+          MINIO_STG_ENDPOINT: ${{ secrets.MINIO_STG_ENDPOINT }}
+          MINIO_STG_ACCESS_KEY: ${{ secrets.MINIO_STG_ACCESS_KEY }}
+          MINIO_STG_SECRET_KEY: ${{ secrets.MINIO_STG_SECRET_KEY }}
+          GIT_URL: ${{ secrets.GIT_URL }}
+
         with:
           host: ${{ secrets.SSH_HOST_STAGING }}
           username: ${{ secrets.SSH_USER_NAME_STAGING }}
           password: ${{ secrets.SSH_PASS }}
+          envs: APP_STG_PORT, APP_STG_PATH, MINIO_STG_ENDPOINT, MINIO_STG_ACCESS_KEY, MINIO_STG_SECRET_KEY, GIT_URL
           script: |
-            set -e
-            # Set environment variables
-            APP_STG_PATH=${{ secrets.APP_STG_PATH }}
-            GIT_URL="${{ secrets.GIT_URL }}"
-            MINIO_STG_ENDPOINT="${{ secrets.MINIO_STG_ENDPOINT }}"
-            MINIO_STG_ACCESS_KEY="${{ secrets.MINIO_STG_ACCESS_KEY }}"
-            MINIO_STG_SECRET_KEY="${{ secrets.MINIO_STG_SECRET_KEY }}"
-            APP_STG_PORT="${{ secrets.APP_STG_PORT }}"
 
             # Check if application path exists
             if [[ -d "${APP_STG_PATH}" ]]; then 
