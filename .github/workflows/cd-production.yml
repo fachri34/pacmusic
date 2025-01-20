@@ -19,7 +19,7 @@ jobs:
 
       # Step 2: Deploy to production server via SSH
       - name: Deploy to production server
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v0.1.11
         env:
           APP_PROD_PATH: ${{ vars.APP_PROD_PATH }}
           GIT_URL: ${{ secrets.GIT_URL }}
