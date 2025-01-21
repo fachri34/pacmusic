@@ -59,7 +59,7 @@ jobs:
             
 
             # Run app
-            sudo docker compose up --build --detach pacmusic-prod
+            docker compose up pacmusic-prod --build --detach
 
       # Step 3: Test Hit Endpoint
       - name: Test endpoint
