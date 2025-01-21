@@ -52,4 +52,4 @@ jobs:
 
       - name: Test endpoint
         run: |
-          curl ${{ secrets.STG_URL }}
+          curl ${{ secrets.APP_STG_PORT }}
