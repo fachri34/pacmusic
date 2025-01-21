@@ -52,4 +52,4 @@ jobs:
 
       - name: Test endpoint
         run: |
-          curl ${{ secrets.APP_STG_PATH }}
+          curl  http://localhost:5000
