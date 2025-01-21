@@ -19,7 +19,7 @@ jobs:
 
       # Step 2: Deploy to production server via SSH
       - name: Deploy to production server
-        uses: appleboy/ssh-action@v0.1.11
+        uses: appleboy/ssh-action@v0.1.10
         env:
           APP_PROD_PATH: ${{ vars.APP_PROD_PATH }}
           GIT_URL: ${{ secrets.GIT_URL }}
@@ -50,7 +50,7 @@ jobs:
               cd $APP_PROD_PATH
             fi
 
-            echo "DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}/pacmusic" > .env
+            echo "DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}/Pacmusic" > .env
             echo "APP_TAG=$APP_TAG" >> .env
             echo "APP_PROD_PORT=$APP_PROD_PORT" >> .env
             echo "MINIO_PROD_ENDPOINT=$MINIO_PROD_ENDPOINT" >> .env
