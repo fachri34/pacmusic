@@ -64,4 +64,4 @@ jobs:
       # Step 3: Test Hit Endpoint
       - name: Test endpoint
         run: |
-          curl ${{ secrets.APP_PROD_PORT }}
+          curl ${{ secrets.APP_PROD_PATH }}
