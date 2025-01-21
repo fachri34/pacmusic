@@ -52,4 +52,5 @@ jobs:
 
       - name: Test endpoint
         run: |
-          curl ${{ secrets.SSH_HOST_STAGING }}
+          sleep 10
+          curl ${{ secrets.STG_URL }}
