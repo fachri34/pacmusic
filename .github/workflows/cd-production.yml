@@ -42,7 +42,8 @@ jobs:
 
             if [[ -d "${APP_PROD_PATH}" ]]; then 
               cd "${APP_PROD_PATH}"
-              sudo docker compose down pacmusic-prod
+              sudo docker compose stop pacmusic-prod
+              sudo docker compose rm -f pacmusic-prod
               git pull origin master
             else
               ssh-keyscan github.com > ~/.ssh/known_hosts
@@ -59,8 +60,7 @@ jobs:
             
 
             # Run app
-            docker compose up --build --detach ${DOCKERHUB_USERNAME}/pacmusic-prod:${APP_TAG}
-
+            docker compose up --build --detach
 
       # Step 3: Test Hit Endpoint
       - name: Test endpoint
