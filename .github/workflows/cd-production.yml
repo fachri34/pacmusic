@@ -59,7 +59,8 @@ jobs:
             
 
             # Run app
-            docker compose up --build --detach pacmusic-prod
+            docker compose up --build --detach ${DOCKERHUB_USERNAME}/pacmusic-prod:${APP_TAG}
+
 
       # Step 3: Test Hit Endpoint
       - name: Test endpoint
